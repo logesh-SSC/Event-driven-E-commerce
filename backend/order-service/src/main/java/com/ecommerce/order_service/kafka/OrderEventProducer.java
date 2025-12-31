@@ -15,6 +15,6 @@ public class OrderEventProducer {
 
     public void publishOrderCreatedEvent(OrderCreatedEvent event) {
         kafkaTemplate.send(TOPIC, event);
-        System.out.println("Published Kafka Event: " + event);
+        System.out.println("Logesh Log - Published Kafka Event: " + event);
     }
 }
