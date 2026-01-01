@@ -1,8 +1,10 @@
 package com.ecommerce.order_service.controller;
 
-import com.ecommerce.order_service.dto.OrderCreatedEvent;
+import com.ecommerce.events.OrderCreatedEvent;
+
 import com.ecommerce.order_service.dto.OrderRequest;
 import com.ecommerce.order_service.kafka.OrderEventProducer;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -27,16 +29,26 @@ public class OrderController {
 
         Long orderId = ORDER_ID_SEQ.getAndIncrement();
 
-        OrderCreatedEvent event = new OrderCreatedEvent(
-                orderId,
-                orderRequest.getProductId(),
-                orderRequest.getQuantity()
-        );
+        OrderCreatedEvent event = new OrderCreatedEvent(orderId,orderRequest.getProductId(),orderRequest.getQuantity());
 
-        orderEventProducer.publishOrderCreatedEvent(event);
+        if (orderRequest.getQuantity() <= 0) {
+             return ResponseEntity
+                    .badRequest()
+                    .body(Map.of("error", "Quantity must be greater than zero"));
+        }
 
-        return ResponseEntity
+        if (orderRequest.getProductId() <= 0) {
+             return ResponseEntity
+                    .badRequest()
+                    .body(Map.of("error", "Product ID Info is invalid"));
+        }
+
+        else {
+            orderEventProducer.publishOrderCreatedEvent(event);
+            return ResponseEntity
                 .status(HttpStatus.CREATED)
                 .body(Map.of("status", "ORDER_CREATED"));
+        }
+
     }
 }

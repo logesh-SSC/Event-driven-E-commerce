@@ -9,10 +9,10 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.ecommerce</groupId>
-	<artifactId>order-service</artifactId>
+	<artifactId>inventory_service</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>order-service</name>
-	<description>Event Driven E commerce - Order Service Spring </description>
+	<name>inventory_service</name>
+	<description>Event Driven E commerce Inventory Service for Spring Boot</description>
 	<url/>
 	<licenses>
 		<license/>
@@ -60,6 +60,7 @@
     		<artifactId>common-events</artifactId>
     		<version>0.0.1-SNAPSHOT</version>
 		</dependency>
+
 		
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
