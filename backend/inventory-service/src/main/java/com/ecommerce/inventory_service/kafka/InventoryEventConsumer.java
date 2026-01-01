@@ -1,12 +1,18 @@
 package com.ecommerce.inventory_service.kafka;
 
 import com.ecommerce.events.OrderCreatedEvent;
+import com.ecommerce.events.PaymentCompletedEvent;
+
+import lombok.RequiredArgsConstructor;
 
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Service;
 
 @Service
+@RequiredArgsConstructor
 public class InventoryEventConsumer {
+
+    private final InventoryPaymentProducer paymentProducer;
 
     @KafkaListener(
             topics = "order-created",
@@ -21,5 +27,15 @@ public class InventoryEventConsumer {
 
         // Simulate stock deduction
         System.out.println("Logesh Log - Stock deducted successfully");
+
+        PaymentCompletedEvent paymentEvent =
+                new PaymentCompletedEvent(
+                        event.getOrderId(),
+                        event.getProductId(),
+                        event.getQuantity(),
+                        "SUCCESS"
+                );
+
+        paymentProducer.publishPaymentCompleted(paymentEvent);
     }
 }
