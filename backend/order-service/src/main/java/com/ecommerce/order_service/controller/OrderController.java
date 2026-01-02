@@ -22,6 +22,11 @@ public class OrderController {
     public OrderController(OrderEventProducer orderEventProducer) {
         this.orderEventProducer = orderEventProducer;
     }
+    
+    @GetMapping("/secure-test")
+    public String secureEndpoint() {
+        return "Logesh Says - Order Service secured";
+    }
 
     @PostMapping
     public ResponseEntity<Map<String, String>> createOrder(
