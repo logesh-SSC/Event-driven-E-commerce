@@ -16,6 +16,19 @@ public class JwtUtil {
 
     public String generateToken(String username, String role) {
 
+        /*
+        System.out.println("----- JWUtil Token OF DETAILS -----");
+        System.out.println("Token Generation for User: " + username + " with Role: " + role +"Token "+  Jwts.builder()
+                .subject(username)
+                .claim("role", role)
+                .issuedAt(new Date())
+                .expiration(new Date(System.currentTimeMillis() + 1000 * 60 * 15))
+                .signWith(key)
+                .compact());
+        System.out.println("----- END OF DETAILS -----");
+        */
+
+
         return Jwts.builder()
                 .subject(username)
                 .claim("role", role)

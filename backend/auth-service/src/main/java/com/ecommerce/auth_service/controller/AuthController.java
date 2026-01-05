@@ -1,5 +1,7 @@
 package com.ecommerce.auth_service.controller;
 
+// import java.util.Enumeration;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -19,6 +21,13 @@ private JwtUtil jwtUtil;
 @PostMapping("/login")
 public String login(@RequestBody LoginRequest request) {
 
+    /*
+    System.out.println("----- LOGIN REQUEST DETAILS -----");
+    System.out.println("Username: " + request.getUsername());
+    System.out.println("Password: " + request.getPassword());
+    System.out.println("----- END OF DETAILS -----");
+    */
+
     if ("logesh".equals(request.getUsername())
             && "dharshu".equals(request.getPassword())) {
         System.out.println("Logesh says Generating token for user: " + request.getUsername());
@@ -26,6 +35,5 @@ public String login(@RequestBody LoginRequest request) {
     }
 
     throw new RuntimeException("Invalid credentials");
-}
-
+    }
 }
